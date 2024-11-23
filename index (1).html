@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container div {
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 90%;
+            padding: 8px;
+            margin-top: 5px;
+            font-size: 14px;
+            border-radius: 4px;
+            border: 1px solid black;
+        }
+
+        button {
+            width: 35%;
+            padding: 5px;
+            font-size: 16px;
+            background-color: white;
+            color: black;
+            border: 1px solid black ;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+
+        .success {
+            color: green;
+            font-size: 12px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <form id="signupForm">
+            <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Example@email.com" required>
+                <span id="emailError" class="error hidden">Email must be at least 3 characters long and contain "@" and "."</span>
+                <span id="emailSuccess" class="success hidden">All good to go!</span>
+            </div>
+
+            <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Your Password" required>
+                <span id="passwordError" class="error hidden">Password must be at least 8 characters long.</span>
+                <span id="passwordSuccess" class="success hidden">All good to go!</span>
+            </div>
+
+            <div>
+                <button type="submit" id="submitBtn">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const submitBtn = document.getElementById('submitBtn');
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+        const emailSuccess = document.getElementById('emailSuccess');
+        const passwordSuccess = document.getElementById('passwordSuccess');
+        
+        emailInput.addEventListener('input', function() {
+            const emailValue = emailInput.value;
+            if (emailValue.length >= 3 && emailValue.includes('@') && emailValue.includes('.')) {
+                emailError.classList.add('hidden');
+                emailSuccess.classList.remove('hidden');
+            } else {
+                emailSuccess.classList.add('hidden');
+                emailError.classList.remove('hidden');
+            }
+        });
+
+        passwordInput.addEventListener('input', function() {
+            const passwordValue = passwordInput.value;
+            if (passwordValue.length > 8) {
+                passwordError.classList.add('hidden');
+                passwordSuccess.classList.remove('hidden');
+            } else {
+                passwordSuccess.classList.add('hidden');
+                passwordError.classList.remove('hidden');
+            }
+        });
+
+        submitBtn.addEventListener('click', function(event) {
+            event.preventDefault();
+            
+            const isEmailValid = emailInput.value.length >= 3 && emailInput.value.includes('@') && emailInput.value.includes('.');
+            const isPasswordValid = passwordInput.value.length > 8;
+
+            if (isEmailValid && isPasswordValid) {
+                const confirmSignup = confirm('Are you sure you want to sign up?');
+                if (confirmSignup) {
+                    alert('Successful signup!');
+                } else {
+                    window.location.reload(); 
+                }
+            } else {
+                alert('Please correct the errors before submitting.');
+            }
+        });
+    </script>
+</body>
+</html>
